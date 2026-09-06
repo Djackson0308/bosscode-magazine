@@ -1,165 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>BOSS CODE Magazine Library</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        BOSS CODE Magazine Library
+    </title>
+
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
+
             background: #0d0d0d;
+
             color: white;
-            font-family: Arial, sans-serif;
+
+            font-family:
+                Arial,
+                sans-serif;
+
             min-height: 100vh;
+
         }
+
 
         .header {
+
             background: #000;
-            border-bottom: 1px solid #333;
-            padding: 28px 20px;
+
+            border-bottom:
+                1px solid #333;
+
+            padding:
+                28px 20px;
+
             text-align: center;
+
         }
+
 
         .header h1 {
+
             margin: 0;
+
             font-size: 30px;
+
             letter-spacing: 4px;
+
         }
+
 
         .header p {
-            margin: 8px 0 0;
+
+            margin:
+                8px 0 0;
+
             color: #bbb;
+
             font-size: 14px;
+
         }
+
 
         .library {
+
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
+
+            margin:
+                0 auto;
+
+            padding:
+                40px 20px;
+
         }
+
 
         .section-title {
+
             margin-bottom: 25px;
+
             font-size: 22px;
+
             letter-spacing: 2px;
+
         }
+
 
         .issue-grid {
+
             display: grid;
-            grid-template-columns: repeat(
-                auto-fit,
-                minmax(220px, 280px)
-            );
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        220px,
+                        280px
+                    )
+                );
+
             gap: 30px;
+
             justify-content: start;
+
         }
 
+
         .issue-card {
+
             background: #171717;
-            border: 1px solid #333;
+
+            border:
+                1px solid #333;
+
             border-radius: 10px;
+
             overflow: hidden;
+
             transition:
                 transform 0.2s ease,
                 border-color 0.2s ease;
+
         }
+
 
         .issue-card:hover {
-            transform: translateY(-5px);
-            border-color: #F5C518;
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                #F5C518;
+
         }
+
 
         .cover-wrap {
+
             background: #222;
+
             width: 100%;
-            aspect-ratio: 8.5 / 11;
+
+            aspect-ratio:
+                8.5 / 11;
+
             overflow: hidden;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
         }
+
+
+        .cover-image {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+        }
+
 
         .cover-canvas {
+
             width: 100%;
+
             height: 100%;
+
             display: block;
+
         }
+
 
         .loading-cover {
+
             color: #aaa;
+
             font-size: 14px;
+
+            text-align: center;
+
+            padding: 20px;
+
         }
+
 
         .issue-info {
+
             padding: 18px;
+
         }
+
 
         .issue-title {
-            margin: 0 0 6px;
+
+            margin:
+                0 0 6px;
+
             font-size: 18px;
+
         }
+
 
         .issue-subtitle {
-            margin: 0 0 18px;
+
+            margin:
+                0 0 18px;
+
             font-size: 13px;
+
             color: #aaa;
+
         }
+
+
+        .issue-description {
+
+            margin:
+                -8px 0 18px;
+
+            color: #888;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+
+        }
+
 
         .read-button {
+
             display: block;
+
             width: 100%;
+
             background: #F5C518;
+
             color: #D71920;
+
             text-decoration: none;
+
             text-align: center;
+
             padding: 12px;
+
             border-radius: 6px;
+
             font-weight: bold;
+
             font-size: 15px;
+
         }
+
 
         .read-button:hover {
+
             background: #F2A900;
+
         }
 
-        .footer {
-            text-align: center;
-            color: #777;
-            padding: 30px 20px;
-            font-size: 12px;
+
+        .loading-library {
+
+            color: #999;
+
+            font-size: 14px;
+
+            padding: 20px 0;
+
         }
+
+
+        .error-box {
+
+            display: none;
+
+            border:
+                1px solid #6b2020;
+
+            background: #1a0909;
+
+            color: #ffb1b1;
+
+            border-radius: 10px;
+
+            padding: 15px;
+
+            margin-bottom: 25px;
+
+            font-size: 13px;
+
+        }
+
+
+        .footer {
+
+            text-align: center;
+
+            color: #777;
+
+            padding:
+                30px 20px;
+
+            font-size: 12px;
+
+        }
+
 
         @media (max-width: 600px) {
 
             .header h1 {
+
                 font-size: 22px;
+
                 letter-spacing: 2px;
+
             }
+
 
             .library {
-                padding: 25px 15px;
+
+                padding:
+                    25px 15px;
+
             }
+
 
             .issue-grid {
-                grid-template-columns: 1fr;
-                justify-items: center;
+
+                grid-template-columns:
+                    1fr;
+
+                justify-items:
+                    center;
+
             }
+
 
             .issue-card {
+
                 width: 100%;
+
                 max-width: 300px;
+
             }
+
         }
+
     </style>
+
 </head>
 
+
 <body>
+
 
     <div class="header">
 
@@ -174,61 +390,37 @@
     </div>
 
 
+
     <main class="library">
+
 
         <div class="section-title">
             MAGAZINE LIBRARY
         </div>
 
 
-        <div class="issue-grid">
+        <div
+            id="errorBox"
+            class="error-box"
+        ></div>
 
 
-            <article class="issue-card">
-
-                <div class="cover-wrap">
-
-                    <div
-                        class="loading-cover"
-                        id="loading-cover-26"
-                    >
-                        Loading Cover...
-                    </div>
-
-                    <canvas
-                        class="cover-canvas"
-                        id="cover-canvas-26"
-                        style="display:none;"
-                    ></canvas>
-
-                </div>
-
-
-                <div class="issue-info">
-
-                    <h2 class="issue-title">
-                        BOSS CODE Magazine
-                    </h2>
-
-                    <p class="issue-subtitle">
-                        Issue 26
-                    </p>
-
-                    <a
-                        href="reader.html?pdf=CORMEGA%2026.pdf"
-                        class="read-button"
-                    >
-                        READ ISSUE
-                    </a>
-
-                </div>
-
-            </article>
-
-
+        <div
+            id="loadingLibrary"
+            class="loading-library"
+        >
+            Loading magazines...
         </div>
 
+
+        <div
+            id="issueGrid"
+            class="issue-grid"
+        ></div>
+
+
     </main>
+
 
 
     <div class="footer">
@@ -236,76 +428,593 @@
     </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"
+    ></script>
+
 
 
     <script>
+
+
+        /* ===================================================== */
+        /* CONFIG */
+        /* ===================================================== */
+
+
+        const API =
+            "https://boss-code-magazine-api.dezthareason4ever.workers.dev";
+
 
         pdfjsLib.GlobalWorkerOptions.workerSrc =
             "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
 
-        const magazines = [
+
+        /* ===================================================== */
+        /* LEGACY ISSUE 26 */
+        /* ===================================================== */
+
+
+        const legacyIssues = [
 
             {
-                pdf: "CORMEGA 26.pdf",
-                canvasId: "cover-canvas-26",
-                loadingId: "loading-cover-26"
+
+                id:
+                    "legacy-26",
+
+                title:
+                    "BOSS CODE Magazine",
+
+                issue_date:
+                    "Issue 26",
+
+                description:
+                    "",
+
+                issue_url:
+                    "reader.html?pdf=CORMEGA%2026.pdf",
+
+                pdf_file:
+                    "CORMEGA 26.pdf",
+
+                cover_url:
+                    "",
+
+                published:
+                    1,
+
+                featured:
+                    0,
+
+                sort_order:
+                    26
+
             }
 
         ];
 
 
-        async function loadMagazineCover(
-            pdfFile,
-            canvasId,
-            loadingId
+
+        /* ===================================================== */
+        /* HELPERS */
+        /* ===================================================== */
+
+
+        function esc(
+            value
         ) {
+
+            return String(
+                value ?? ""
+            )
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+
+        function normalizeUrl(
+            value
+        ) {
+
+            return String(
+                value || ""
+            ).trim();
+
+        }
+
+
+
+        /* ===================================================== */
+        /* LOAD BACKEND MAGAZINES */
+        /* ===================================================== */
+
+
+        async function loadMagazines() {
+
+            const loading =
+                document.getElementById(
+                    "loadingLibrary"
+                );
+
+
+            const errorBox =
+                document.getElementById(
+                    "errorBox"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API + "/magazines",
+                        {
+                            method:
+                                "GET",
+
+                            cache:
+                                "no-store"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    !response.ok ||
+                    data.success === false
+                ) {
+
+                    throw Error(
+                        data.error ||
+                        "Could not load magazines."
+                    );
+
+                }
+
+
+                const cloudIssues =
+                    Array.isArray(
+                        data.data
+                    )
+                        ? data.data
+                        : [];
+
+
+                const combined =
+                    mergeIssues(
+                        cloudIssues,
+                        legacyIssues
+                    );
+
+
+                renderMagazines(
+                    combined
+                );
+
+
+                loading.style.display =
+                    "none";
+
+            }
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                loading.style.display =
+                    "none";
+
+
+                errorBox.style.display =
+                    "block";
+
+
+                errorBox.textContent =
+                    "The online magazine library could not be reached. Issue 26 is still available below.";
+
+
+                renderMagazines(
+                    legacyIssues
+                );
+
+            }
+
+        }
+
+
+
+        /* ===================================================== */
+        /* MERGE CLOUD + LEGACY */
+        /* ===================================================== */
+
+
+        function mergeIssues(
+            cloudIssues,
+            legacyIssues
+        ) {
+
+            const result =
+                [...cloudIssues];
+
+
+            legacyIssues.forEach(
+                legacy => {
+
+                    const duplicate =
+                        result.some(
+                            item => {
+
+                                const label =
+                                    String(
+                                        item.issue_date || ""
+                                    )
+                                        .toLowerCase()
+                                        .trim();
+
+
+                                const legacyLabel =
+                                    String(
+                                        legacy.issue_date || ""
+                                    )
+                                        .toLowerCase()
+                                        .trim();
+
+
+                                return (
+                                    label ===
+                                    legacyLabel
+                                );
+
+                            }
+                        );
+
+
+                    if (!duplicate) {
+
+                        result.push(
+                            legacy
+                        );
+
+                    }
+
+                }
+            );
+
+
+            return result;
+
+        }
+
+
+
+        /* ===================================================== */
+        /* RENDER LIBRARY */
+        /* ===================================================== */
+
+
+        function renderMagazines(
+            magazines
+        ) {
+
+            const grid =
+                document.getElementById(
+                    "issueGrid"
+                );
+
+
+            if (
+                !magazines ||
+                !magazines.length
+            ) {
+
+                grid.innerHTML =
+                    '<div class="loading-library">No magazine issues are currently published.</div>';
+
+                return;
+
+            }
+
+
+            grid.innerHTML =
+                magazines
+                    .map(
+                        item => {
+
+                            const id =
+                                String(
+                                    item.id
+                                )
+                                    .replace(
+                                        /[^a-zA-Z0-9_-]/g,
+                                        ""
+                                    );
+
+
+                            const title =
+                                item.title ||
+                                "BOSS CODE Magazine";
+
+
+                            const issueLabel =
+                                item.issue_date ||
+                                "Magazine Issue";
+
+
+                            const description =
+                                item.description ||
+                                "";
+
+
+                            const issueUrl =
+                                normalizeUrl(
+                                    item.issue_url
+                                );
+
+
+                            const coverUrl =
+                                normalizeUrl(
+                                    item.cover_url
+                                );
+
+
+                            const pdfFile =
+                                normalizeUrl(
+                                    item.pdf_file
+                                );
+
+
+                            let coverHtml =
+                                "";
+
+
+                            if (coverUrl) {
+
+                                coverHtml = `
+
+                                    <img
+                                        class="cover-image"
+                                        src="${esc(coverUrl)}"
+                                        alt="${esc(issueLabel)} cover"
+                                        loading="lazy"
+                                    >
+
+                                `;
+
+                            }
+                            else if (pdfFile) {
+
+                                coverHtml = `
+
+                                    <div
+                                        class="loading-cover"
+                                        id="loading-${id}"
+                                    >
+                                        Loading Cover...
+                                    </div>
+
+                                    <canvas
+                                        class="cover-canvas"
+                                        id="canvas-${id}"
+                                        style="display:none;"
+                                    ></canvas>
+
+                                `;
+
+                            }
+                            else {
+
+                                coverHtml = `
+
+                                    <div class="loading-cover">
+                                        Cover unavailable
+                                    </div>
+
+                                `;
+
+                            }
+
+
+                            return `
+
+                                <article class="issue-card">
+
+
+                                    <div class="cover-wrap">
+
+                                        ${coverHtml}
+
+                                    </div>
+
+
+                                    <div class="issue-info">
+
+
+                                        <h2 class="issue-title">
+
+                                            ${esc(title)}
+
+                                        </h2>
+
+
+                                        <p class="issue-subtitle">
+
+                                            ${esc(issueLabel)}
+
+                                        </p>
+
+
+                                        ${
+                                            description
+                                                ? `
+                                                <p class="issue-description">
+                                                    ${esc(description)}
+                                                </p>
+                                                `
+                                                : ""
+                                        }
+
+
+                                        <a
+                                            href="${esc(issueUrl)}"
+                                            class="read-button"
+                                        >
+                                            READ ISSUE
+                                        </a>
+
+
+                                    </div>
+
+
+                                </article>
+
+                            `;
+
+                        }
+
+                    )
+                    .join("");
+
+
+            magazines.forEach(
+                item => {
+
+                    if (
+                        item.pdf_file &&
+                        !item.cover_url
+                    ) {
+
+                        loadPdfCover(
+                            item
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        /* ===================================================== */
+        /* LEGACY PDF COVER */
+        /* ===================================================== */
+
+
+        async function loadPdfCover(
+            item
+        ) {
+
+            const id =
+                String(
+                    item.id
+                )
+                    .replace(
+                        /[^a-zA-Z0-9_-]/g,
+                        ""
+                    );
+
+
+            const canvas =
+                document.getElementById(
+                    "canvas-" + id
+                );
+
+
+            const loading =
+                document.getElementById(
+                    "loading-" + id
+                );
+
+
+            if (
+                !canvas ||
+                !loading
+            ) {
+
+                return;
+
+            }
+
 
             try {
 
                 const pdf =
                     await pdfjsLib
-                        .getDocument(pdfFile)
+                        .getDocument(
+                            item.pdf_file
+                        )
                         .promise;
 
 
                 const firstPage =
-                    await pdf.getPage(1);
+                    await pdf.getPage(
+                        1
+                    );
 
 
                 const viewport =
                     firstPage.getViewport({
-                        scale: 1
+                        scale:
+                            1.2
                     });
 
 
-                const canvas =
-                    document.getElementById(
-                        canvasId
-                    );
-
-
                 const context =
-                    canvas.getContext("2d");
+                    canvas.getContext(
+                        "2d"
+                    );
 
 
                 canvas.width =
                     viewport.width;
 
+
                 canvas.height =
                     viewport.height;
 
 
-                await firstPage.render({
-                    canvasContext: context,
-                    viewport: viewport
-                }).promise;
+                await firstPage
+                    .render({
+
+                        canvasContext:
+                            context,
+
+                        viewport:
+                            viewport
+
+                    })
+                    .promise;
 
 
-                document
-                    .getElementById(loadingId)
-                    .style.display =
+                loading.style.display =
                     "none";
 
 
@@ -313,14 +1022,14 @@
                     "block";
 
             }
-
             catch (error) {
 
-                console.error(error);
+                console.error(
+                    error
+                );
 
-                document
-                    .getElementById(loadingId)
-                    .innerText =
+
+                loading.textContent =
                     "Cover unavailable";
 
             }
@@ -328,19 +1037,18 @@
         }
 
 
-        magazines.forEach(
-            function (magazine) {
 
-                loadMagazineCover(
-                    magazine.pdf,
-                    magazine.canvasId,
-                    magazine.loadingId
-                );
+        /* ===================================================== */
+        /* START */
+        /* ===================================================== */
 
-            }
-        );
+
+        loadMagazines();
+
 
     </script>
 
+
 </body>
+
 </html>
