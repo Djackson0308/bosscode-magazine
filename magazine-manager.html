@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0"
+>
+
+<title>B.O.S.S CODE Magazine Manager</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.wrap{
+    width:min(1100px,calc(100% - 28px));
+    margin:auto;
+    padding:30px 0 70px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    font-size:30px;
+    letter-spacing:3px;
+    margin-bottom:8px;
+}
+
+.header p{
+    color:#888;
+    font-size:12px;
+}
+
+.gold{
+    color:#F5C518;
+}
+
+.card{
+    background:linear-gradient(145deg,#111,#050505);
+    border:1px solid #282828;
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:20px;
+}
+
+.card-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card-head small{
+    display:block;
+    color:#F5C518;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:2px;
+    margin-bottom:5px;
+}
+
+.card-head h2{
+    font-size:24px;
+}
+
+.status{
+    padding:8px 12px;
+    border-radius:999px;
+    background:#181818;
+    color:#888;
+    font-size:10px;
+    font-weight:900;
+}
+
+.status.ok{
+    background:#102518;
+    color:#72e59a;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:15px;
+}
+
+.field{
+    margin-bottom:4px;
+}
+
+.field.full{
+    grid-column:1 / -1;
+}
+
+.field label{
+    display:block;
+    font-size:10px;
+    font-weight:900;
+    margin-bottom:7px;
+    letter-spacing:.05em;
+}
+
+.input,
+.textarea,
+.select{
+    width:100%;
+    border:1px solid #303030;
+    border-radius:13px;
+    background:#080808;
+    color:#fff;
+    outline:none;
+    padding:0 14px;
+}
+
+.input,
+.select{
+    min-height:50px;
+}
+
+.textarea{
+    min-height:110px;
+    padding:14px;
+    resize:vertical;
+}
+
+input[type="file"]{
+    padding:13px;
+}
+
+.check-row{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+.check{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    font-weight:900;
+}
+
+.check input{
+    width:18px;
+    height:18px;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.btn{
+    min-height:46px;
+    padding:0 19px;
+    border-radius:999px;
+    font-size:10px;
+    font-weight:900;
+}
+
+.red{
+    background:#d40000;
+    color:#fff;
+    border:0;
+}
+
+.gold-btn{
+    background:#F5C518;
+    color:#000;
+    border:0;
+}
+
+.outline{
+    background:transparent;
+    color:#F5C518;
+    border:1px solid #F5C518;
+}
+
+.gray{
+    background:#161616;
+    color:#fff;
+    border:1px solid #333;
+}
+
+.message{
+    min-height:20px;
+    margin-top:14px;
+    font-size:11px;
+    font-weight:900;
+    color:#F5C518;
+    line-height:1.5;
+}
+
+.progress-wrap{
+    display:none;
+    margin-top:15px;
+}
+
+.progress-shell{
+    width:100%;
+    height:8px;
+    border-radius:999px;
+    background:#202020;
+    overflow:hidden;
+}
+
+.progress{
+    width:0%;
+    height:100%;
+    background:#F5C518;
+    transition:width .25s ease;
+}
+
+.progress-text{
+    margin-top:8px;
+    color:#aaa;
+    font-size:10px;
+}
+
+.issue-list{
+    display:grid;
+    gap:14px;
+}
+
+.issue{
+    border:1px solid #292929;
+    background:#080808;
+    border-radius:18px;
+    padding:16px;
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:16px;
+}
+
+.issue-cover{
+    width:90px;
+    aspect-ratio:8.5 / 11;
+    object-fit:cover;
+    background:#151515;
+    border-radius:8px;
+}
+
+.issue-content h3{
+    font-size:19px;
+    margin-bottom:5px;
+}
+
+.issue-label{
+    color:#F5C518;
+    font-size:11px;
+    font-weight:900;
+    margin-bottom:7px;
+}
+
+.issue-description{
+    color:#aaa;
+    font-size:11px;
+    line-height:1.5;
+    margin-bottom:10px;
+}
+
+.issue-meta{
+    color:#777;
+    font-size:9px;
+    line-height:1.5;
+}
+
+.issue-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.issue-actions button{
+    min-height:36px;
+    padding:0 13px;
+    border-radius:999px;
+    font-size:9px;
+    font-weight:900;
+}
+
+.empty{
+    color:#777;
+    font-size:11px;
+}
+
+.login{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.97);
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login.hide{
+    display:none;
+}
+
+.login-box{
+    width:min(460px,100%);
+    background:#0b0b0b;
+    border:1px solid #292929;
+    border-radius:22px;
+    padding:24px;
+}
+
+.login-box h2{
+    font-size:26px;
+    margin:7px 0;
+}
+
+.login-box p{
+    color:#888;
+    font-size:11px;
+    line-height:1.5;
+    margin-bottom:18px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+@media(max-width:700px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .card-head{
+        display:block;
+    }
+
+    .status{
+        display:inline-block;
+        margin-top:10px;
+    }
+
+    .issue{
+        grid-template-columns:70px 1fr;
+    }
+
+    .issue-cover{
+        width:70px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div
+    id="login"
+    class="login"
+>
+
+    <div class="login-box">
+
+        <div class="gold">
+            PRIVATE MAGAZINE MANAGEMENT
+        </div>
+
+        <h2>
+            B.O.S.S CODE MAGAZINE
+        </h2>
+
+        <p>
+            Enter your B.O.S.S CODE admin key.
+        </p>
+
+        <div class="field">
+
+            <label>
+                ADMIN KEY
+            </label>
+
+            <input
+                id="adminKey"
+                class="input"
+                type="password"
+                autocomplete="off"
+            >
+
+        </div>
+
+        <div class="actions">
+
+            <button
+                id="unlock"
+                class="btn red"
+            >
+                UNLOCK MAGAZINE MANAGER
+            </button>
+
+        </div>
+
+        <div
+            id="loginMsg"
+            class="message"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<main class="wrap">
+
+    <header class="header">
+
+        <div class="gold">
+            B.O.S.S CODE MEDIA GROUP
+        </div>
+
+        <h1>
+            MAGAZINE MANAGER
+        </h1>
+
+        <p>
+            Upload and publish B.O.S.S CODE Magazine issues.
+        </p>
+
+    </header>
+
+
+    <section class="card">
+
+        <div class="card-head">
+
+            <div>
+
+                <small>
+                    MAGAZINE CONTROL
+                </small>
+
+                <h2 id="formTitle">
+                    UPLOAD NEW ISSUE
+                </h2>
+
+            </div>
+
+            <div
+                id="status"
+                class="status ok"
+            >
+                READY
+            </div>
+
+        </div>
+
+
+        <div class="grid">
+
+            <div class="field">
+
+                <label>
+                    MAGAZINE TITLE
+                </label>
+
+                <input
+                    id="title"
+                    class="input"
+                    value="BOSS CODE Magazine"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    ISSUE LABEL
+                </label>
+
+                <input
+                    id="issueLabel"
+                    class="input"
+                    placeholder="Issue 27"
+                >
+
+            </div>
+
+
+            <div class="field full">
+
+                <label>
+                    DESCRIPTION
+                </label>
+
+                <textarea
+                    id="description"
+                    class="textarea"
+                    placeholder="Optional issue description"
+                ></textarea>
+
+            </div>
+
+
+            <div
+                id="pdfField"
+                class="field"
+            >
+
+                <label>
+                    MAGAZINE PDF
+                </label>
+
+                <input
+                    id="pdfFile"
+                    class="input"
+                    type="file"
+                    accept="application/pdf,.pdf"
+                >
+
+            </div>
+
+
+            <div
+                id="coverField"
+                class="field"
+            >
+
+                <label>
+                    COVER IMAGE
+                </label>
+
+                <input
+                    id="coverFile"
+                    class="input"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    SORT ORDER
+                </label>
+
+                <input
+                    id="sortOrder"
+                    class="input"
+                    type="number"
+                    value="0"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="check-row">
+
+            <label class="check">
+
+                <input
+                    id="featured"
+                    type="checkbox"
+                >
+
+                FEATURED
+
+            </label>
+
+
+            <label class="check">
+
+                <input
+                    id="published"
+                    type="checkbox"
+                    checked
+                >
+
+                PUBLISHED
+
+            </label>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                id="publish"
+                class="btn red"
+            >
+                UPLOAD ISSUE
+            </button>
+
+            <button
+                id="cancelEdit"
+                class="btn gray hidden"
+            >
+                CANCEL EDIT
+            </button>
+
+            <button
+                id="refresh"
+                class="btn outline"
+            >
+                REFRESH ISSUES
+            </button>
+
+            <button
+                id="lock"
+                class="btn gray"
+            >
+                LOCK MANAGER
+            </button>
+
+        </div>
+
+
+        <div
+            id="progressWrap"
+            class="progress-wrap"
+        >
+
+            <div class="progress-shell">
+
+                <div
+                    id="progress"
+                    class="progress"
+                ></div>
+
+            </div>
+
+            <div
+                id="progressText"
+                class="progress-text"
+            ></div>
+
+        </div>
+
+
+        <div
+            id="msg"
+            class="message"
+        ></div>
+
+    </section>
+
+
+    <section class="card">
+
+        <div class="card-head">
+
+            <div>
+
+                <small>
+                    MAGAZINE LIBRARY
+                </small>
+
+                <h2>
+                    EXISTING ISSUES
+                </h2>
+
+            </div>
+
+            <div
+                id="issueCount"
+                class="status"
+            >
+                0 ISSUES
+            </div>
+
+        </div>
+
+        <div
+            id="issueList"
+            class="issue-list"
+        >
+
+            <div class="empty">
+                No issues loaded.
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+const API =
+    "https://boss-code-go-api.dezthareason4ever.workers.dev";
+
+const MAGAZINE_SITE =
+    "https://magazine.bosscodemedia.com";
+
+let KEY =
+    sessionStorage.getItem(
+        "boss-code-admin-key"
+    ) || "";
+
+let magazines = [];
+
+let editingId = null;
+
+
+const $ =
+    id =>
+        document.getElementById(id);
+
+
+const esc =
+    value =>
+        String(value ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;")
+            .replace(/'/g,"&#039;");
+
+
+function setStatus(
+    text,
+    okay = false
+){
+
+    $("status").textContent =
+        text;
+
+    $("status")
+        .classList
+        .toggle(
+            "ok",
+            okay
+        );
+
+}
+
+
+async function api(
+    path,
+    options = {}
+){
+
+    const headers =
+        new Headers(
+            options.headers || {}
+        );
+
+
+    if(KEY){
+
+        headers.set(
+            "X-Admin-Key",
+            KEY
+        );
+
+    }
+
+
+    if(
+        options.body &&
+        !(options.body instanceof FormData) &&
+        !headers.has("Content-Type")
+    ){
+
+        headers.set(
+            "Content-Type",
+            "application/json"
+        );
+
+    }
+
+
+    const response =
+        await fetch(
+            API + path,
+            {
+                ...options,
+                headers
+            }
+        );
+
+
+    const data =
+        await response
+            .json()
+            .catch(
+                () => ({
+                    success:false,
+                    error:"Bad response"
+                })
+            );
+
+
+    if(
+        !response.ok ||
+        data.success === false
+    ){
+
+        throw Error(
+            data.error ||
+            "Request failed"
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+async function unlock(){
+
+    KEY =
+        $("adminKey")
+            .value
+            .trim();
+
+
+    if(!KEY){
+
+        $("loginMsg").textContent =
+            "ENTER YOUR ADMIN KEY.";
+
+        return;
+
+    }
+
+
+    sessionStorage.setItem(
+        "boss-code-admin-key",
+        KEY
+    );
+
+
+    try{
+
+        await api(
+            "/magazines?all=1"
+        );
+
+
+        $("login")
+            .classList
+            .add("hide");
+
+
+        $("loginMsg").textContent =
+            "";
+
+
+        await loadMagazines();
+
+    }
+    catch(error){
+
+        KEY = "";
+
+        sessionStorage.removeItem(
+            "boss-code-admin-key"
+        );
+
+
+        $("loginMsg").textContent =
+            "COULD NOT CONNECT. CHECK YOUR ADMIN KEY.";
+
+    }
+
+}
+
+
+function lock(){
+
+    KEY = "";
+
+    sessionStorage.removeItem(
+        "boss-code-admin-key"
+    );
+
+
+    $("login")
+        .classList
+        .remove("hide");
+
+}
+
+
+function showProgress(
+    percent,
+    text
+){
+
+    $("progressWrap")
+        .style
+        .display =
+        "block";
+
+
+    $("progress")
+        .style
+        .width =
+        percent + "%";
+
+
+    $("progressText")
+        .textContent =
+        text;
+
+}
+
+
+function hideProgress(){
+
+    setTimeout(
+        () => {
+
+            $("progressWrap")
+                .style
+                .display =
+                "none";
+
+            $("progress")
+                .style
+                .width =
+                "0%";
+
+            $("progressText")
+                .textContent =
+                "";
+
+        },
+        900
+    );
+
+}
+
+
+async function uploadFile(
+    file,
+    folder
+){
+
+    const form =
+        new FormData();
+
+
+    form.append(
+        "file",
+        file
+    );
+
+
+    form.append(
+        "folder",
+        folder
+    );
+
+
+    const result =
+        await api(
+            "/media/upload",
+            {
+                method:"POST",
+                body:form
+            }
+        );
+
+
+    return result.url;
+
+}
+
+
+function buildReaderUrl(
+    pdfUrl
+){
+
+    return (
+        MAGAZINE_SITE +
+        "/reader.html?pdf=" +
+        encodeURIComponent(pdfUrl)
+    );
+
+}
+
+
+async function publishIssue(){
+
+    $("msg").textContent =
+        "";
+
+
+    const title =
+        $("title")
+            .value
+            .trim();
+
+
+    const issueLabel =
+        $("issueLabel")
+            .value
+            .trim();
+
+
+    const description =
+        $("description")
+            .value
+            .trim();
+
+
+    const sortOrder =
+        Number(
+            $("sortOrder").value || 0
+        );
+
+
+    const featured =
+        $("featured").checked
+            ? 1
+            : 0;
+
+
+    const published =
+        $("published").checked
+            ? 1
+            : 0;
+
+
+    if(!title){
+
+        $("msg").textContent =
+            "ENTER A MAGAZINE TITLE.";
+
+        return;
+
+    }
+
+
+    if(!issueLabel){
+
+        $("msg").textContent =
+            "ENTER AN ISSUE LABEL.";
+
+        return;
+
+    }
+
+
+    try{
+
+        $("publish").disabled =
+            true;
+
+
+        if(editingId){
+
+            setStatus(
+                "UPDATING"
+            );
+
+
+            const existing =
+                magazines.find(
+                    item =>
+                        Number(item.id) ===
+                        Number(editingId)
+                );
+
+
+            if(!existing){
+
+                throw Error(
+                    "Magazine record not found."
+                );
+
+            }
+
+
+            let coverImageUrl =
+                existing.cover_image_url || "";
+
+
+            let magazineUrl =
+                existing.magazine_url || "";
+
+
+            const pdf =
+                $("pdfFile").files[0];
+
+
+            const cover =
+                $("coverFile").files[0];
+
+
+            if(pdf){
+
+                showProgress(
+                    20,
+                    "Uploading replacement magazine PDF..."
+                );
+
+
+                const pdfUrl =
+                    await uploadFile(
+                        pdf,
+                        "magazines/pdfs"
+                    );
+
+
+                magazineUrl =
+                    buildReaderUrl(
+                        pdfUrl
+                    );
+
+            }
+
+
+            if(cover){
+
+                showProgress(
+                    55,
+                    "Uploading replacement cover..."
+                );
+
+
+                coverImageUrl =
+                    await uploadFile(
+                        cover,
+                        "magazines/covers"
+                    );
+
+            }
+
+
+            showProgress(
+                80,
+                "Updating magazine record..."
+            );
+
+
+            await api(
+                `/magazines/${editingId}`,
+                {
+                    method:"PUT",
+
+                    body:JSON.stringify({
+
+                        title,
+                        description,
+
+                        cover_image_url:
+                            coverImageUrl,
+
+                        magazine_url:
+                            magazineUrl,
+
+                        issue_label:
+                            issueLabel,
+
+                        featured,
+                        published,
+
+                        sort_order:
+                            sortOrder
+
+                    })
+
+                }
+            );
+
+
+            showProgress(
+                100,
+                "Issue updated."
+            );
+
+
+            $("msg").textContent =
+                "MAGAZINE ISSUE UPDATED.";
+
+
+            resetForm();
+
+
+            await loadMagazines();
+
+
+            hideProgress();
+
+
+            return;
+
+        }
+
+
+        const pdf =
+            $("pdfFile").files[0];
+
+
+        const cover =
+            $("coverFile").files[0];
+
+
+        if(!pdf){
+
+            $("msg").textContent =
+                "CHOOSE THE MAGAZINE PDF.";
+
+            return;
+
+        }
+
+
+        if(!cover){
+
+            $("msg").textContent =
+                "CHOOSE THE COVER IMAGE.";
+
+            return;
+
+        }
+
+
+        setStatus(
+            "UPLOADING"
+        );
+
+
+        showProgress(
+            10,
+            "Uploading magazine PDF..."
+        );
+
+
+        const pdfUrl =
+            await uploadFile(
+                pdf,
+                "magazines/pdfs"
+            );
+
+
+        showProgress(
+            45,
+            "Magazine PDF uploaded. Uploading cover..."
+        );
+
+
+        const coverImageUrl =
+            await uploadFile(
+                cover,
+                "magazines/covers"
+            );
+
+
+        showProgress(
+            75,
+            "Creating flipbook link..."
+        );
+
+
+        const magazineUrl =
+            buildReaderUrl(
+                pdfUrl
+            );
+
+
+        showProgress(
+            85,
+            "Publishing issue..."
+        );
+
+
+        await api(
+            "/magazines",
+            {
+                method:"POST",
+
+                body:JSON.stringify({
+
+                    title,
+                    description,
+
+                    cover_image_url:
+                        coverImageUrl,
+
+                    magazine_url:
+                        magazineUrl,
+
+                    issue_label:
+                        issueLabel,
+
+                    featured,
+                    published,
+
+                    sort_order:
+                        sortOrder
+
+                })
+
+            }
+        );
+
+
+        showProgress(
+            100,
+            "Magazine published."
+        );
+
+
+        $("msg").textContent =
+            "MAGAZINE ISSUE UPLOADED AND PUBLISHED.";
+
+
+        setStatus(
+            "READY",
+            true
+        );
+
+
+        resetForm();
+
+
+        await loadMagazines();
+
+
+        hideProgress();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        setStatus(
+            "ERROR"
+        );
+
+
+        $("msg").textContent =
+            error.message;
+
+
+        hideProgress();
+
+    }
+    finally{
+
+        $("publish").disabled =
+            false;
+
+    }
+
+}
+
+
+async function loadMagazines(){
+
+    try{
+
+        setStatus(
+            "LOADING"
+        );
+
+
+        const result =
+            await api(
+                "/magazines?all=1"
+            );
+
+
+        magazines =
+            result.data || [];
+
+
+        renderMagazines();
+
+
+        setStatus(
+            "READY",
+            true
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        setStatus(
+            "ERROR"
+        );
+
+
+        $("msg").textContent =
+            error.message;
+
+    }
+
+}
+
+
+function renderMagazines(){
+
+    $("issueCount").textContent =
+        magazines.length +
+        (
+            magazines.length === 1
+                ? " ISSUE"
+                : " ISSUES"
+        );
+
+
+    if(!magazines.length){
+
+        $("issueList").innerHTML =
+            '<div class="empty">NO MAGAZINE ISSUES FOUND.</div>';
+
+        return;
+
+    }
+
+
+    $("issueList").innerHTML =
+        magazines
+            .map(
+                item => {
+
+                    const image =
+                        item.cover_image_url
+                            ? `
+                            <img
+                                class="issue-cover"
+                                src="${esc(item.cover_image_url)}"
+                                alt="${esc(item.issue_label || item.title)}"
+                            >
+                            `
+                            : `
+                            <div class="issue-cover"></div>
+                            `;
+
+
+                    return `
+
+                    <div class="issue">
+
+                        <div>
+                            ${image}
+                        </div>
+
+                        <div class="issue-content">
+
+                            <div class="issue-label">
+                                ${esc(
+                                    item.issue_label ||
+                                    "MAGAZINE ISSUE"
+                                )}
+                            </div>
+
+                            <h3>
+                                ${esc(
+                                    item.title ||
+                                    "BOSS CODE Magazine"
+                                )}
+                            </h3>
+
+                            <div class="issue-description">
+                                ${esc(
+                                    item.description ||
+                                    ""
+                                )}
+                            </div>
+
+                            <div class="issue-meta">
+
+                                ${
+                                    Number(item.published)
+                                        ? "PUBLISHED"
+                                        : "UNPUBLISHED"
+                                }
+
+                                ${
+                                    Number(item.featured)
+                                        ? " • FEATURED"
+                                        : ""
+                                }
+
+                                • SORT ${Number(item.sort_order || 0)}
+
+                            </div>
+
+                            <div class="issue-actions">
+
+                                ${
+                                    item.magazine_url
+                                        ? `
+                                        <button
+                                            class="gold-btn"
+                                            onclick="openIssue(${Number(item.id)})"
+                                        >
+                                            OPEN ISSUE
+                                        </button>
+                                        `
+                                        : ""
+                                }
+
+                                <button
+                                    class="outline"
+                                    onclick="editIssue(${Number(item.id)})"
+                                >
+                                    EDIT
+                                </button>
+
+                                <button
+                                    class="gray"
+                                    onclick="togglePublished(${Number(item.id)})"
+                                >
+                                    ${
+                                        Number(item.published)
+                                            ? "UNPUBLISH"
+                                            : "PUBLISH"
+                                    }
+                                </button>
+
+                                <button
+                                    class="red"
+                                    onclick="deleteIssue(${Number(item.id)})"
+                                >
+                                    DELETE RECORD
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+function openIssue(
+    id
+){
+
+    const item =
+        magazines.find(
+            magazine =>
+                Number(magazine.id) ===
+                Number(id)
+        );
+
+
+    if(
+        !item ||
+        !item.magazine_url
+    ){
+
+        return;
+
+    }
+
+
+    window.open(
+        item.magazine_url,
+        "_blank"
+    );
+
+}
+
+
+function editIssue(
+    id
+){
+
+    const item =
+        magazines.find(
+            magazine =>
+                Number(magazine.id) ===
+                Number(id)
+        );
+
+
+    if(!item){
+
+        return;
+
+    }
+
+
+    editingId =
+        Number(id);
+
+
+    $("formTitle").textContent =
+        "EDIT ISSUE";
+
+
+    $("publish").textContent =
+        "SAVE CHANGES";
+
+
+    $("cancelEdit")
+        .classList
+        .remove("hidden");
+
+
+    $("title").value =
+        item.title || "";
+
+
+    $("issueLabel").value =
+        item.issue_label || "";
+
+
+    $("description").value =
+        item.description || "";
+
+
+    $("sortOrder").value =
+        Number(
+            item.sort_order || 0
+        );
+
+
+    $("featured").checked =
+        Number(item.featured) === 1;
+
+
+    $("published").checked =
+        Number(item.published) === 1;
+
+
+    $("pdfFile").value =
+        "";
+
+
+    $("coverFile").value =
+        "";
+
+
+    $("msg").textContent =
+        "YOU CAN CHANGE THE TEXT ONLY OR CHOOSE A NEW PDF OR COVER TO REPLACE THE CURRENT FILE.";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+function resetForm(){
+
+    editingId =
+        null;
+
+
+    $("formTitle").textContent =
+        "UPLOAD NEW ISSUE";
+
+
+    $("publish").textContent =
+        "UPLOAD ISSUE";
+
+
+    $("cancelEdit")
+        .classList
+        .add("hidden");
+
+
+    $("title").value =
+        "BOSS CODE Magazine";
+
+
+    $("issueLabel").value =
+        "";
+
+
+    $("description").value =
+        "";
+
+
+    $("sortOrder").value =
+        "0";
+
+
+    $("featured").checked =
+        false;
+
+
+    $("published").checked =
+        true;
+
+
+    $("pdfFile").value =
+        "";
+
+
+    $("coverFile").value =
+        "";
+
+}
+
+
+async function togglePublished(
+    id
+){
+
+    const item =
+        magazines.find(
+            magazine =>
+                Number(magazine.id) ===
+                Number(id)
+        );
+
+
+    if(!item){
+
+        return;
+
+    }
+
+
+    try{
+
+        setStatus(
+            "UPDATING"
+        );
+
+
+        await api(
+            `/magazines/${id}`,
+            {
+                method:"PUT",
+
+                body:JSON.stringify({
+
+                    published:
+                        Number(item.published)
+                            ? 0
+                            : 1
+
+                })
+
+            }
+        );
+
+
+        await loadMagazines();
+
+
+        $("msg").textContent =
+            Number(item.published)
+                ? "ISSUE UNPUBLISHED."
+                : "ISSUE PUBLISHED.";
+
+    }
+    catch(error){
+
+        $("msg").textContent =
+            error.message;
+
+    }
+
+}
+
+
+async function deleteIssue(
+    id
+){
+
+    const item =
+        magazines.find(
+            magazine =>
+                Number(magazine.id) ===
+                Number(id)
+        );
+
+
+    if(!item){
+
+        return;
+
+    }
+
+
+    const okay =
+        confirm(
+            "Delete this magazine record? The uploaded files will remain in storage."
+        );
+
+
+    if(!okay){
+
+        return;
+
+    }
+
+
+    try{
+
+        setStatus(
+            "DELETING"
+        );
+
+
+        await api(
+            `/magazines/${id}`,
+            {
+                method:"DELETE"
+            }
+        );
+
+
+        await loadMagazines();
+
+
+        $("msg").textContent =
+            "MAGAZINE RECORD DELETED.";
+
+    }
+    catch(error){
+
+        $("msg").textContent =
+            error.message;
+
+    }
+
+}
+
+
+$("unlock").onclick =
+    unlock;
+
+
+$("adminKey").onkeydown =
+    event => {
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            unlock();
+
+        }
+
+    };
+
+
+$("publish").onclick =
+    publishIssue;
+
+
+$("refresh").onclick =
+    loadMagazines;
+
+
+$("lock").onclick =
+    lock;
+
+
+$("cancelEdit").onclick =
+    () => {
+
+        resetForm();
+
+        $("msg").textContent =
+            "";
+
+    };
+
+
+if(KEY){
+
+    $("adminKey").value =
+        KEY;
+
+
+    api(
+        "/magazines?all=1"
+    )
+        .then(
+            () => {
+
+                $("login")
+                    .classList
+                    .add("hide");
+
+                loadMagazines();
+
+            }
+        )
+        .catch(
+            () => {
+
+                KEY = "";
+
+                sessionStorage.removeItem(
+                    "boss-code-admin-key"
+                );
+
+            }
+        );
+
+}
+
+</script>
+
+</body>
+</html>
